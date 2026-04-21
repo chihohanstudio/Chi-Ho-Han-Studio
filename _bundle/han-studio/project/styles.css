@@ -1,0 +1,170 @@
+/* Han Studio — design tokens + base + responsive */
+
+:root {
+  /* Warm, paper-ivory palette */
+  --paper: #F8F5EF;
+  --paper-soft: #EFEAE0;
+  --paper-warm: #E8E0D0;
+  --ink: #2A241D;           /* warm deep brown, was #1C1B18 */
+  --ink-soft: #4A4239;
+  --ink-mute: #857F74;
+  --ink-faint: #B8B2A6;
+  --rule: #D8D2C4;
+  --rule-soft: #E5E0D2;
+  --accent: #B56A5A;        /* soft terracotta, was brick #9B2D1F */
+  --accent-strong: #9B4B3B; /* for hover / emphasis */
+  --green: #4A6B54;
+  --green-soft: #DDE4DD;
+
+  /* Radius scale — nested rounding, gentle & therapeutic */
+  --r-xs: 8px;      /* tiny chips, badges, inputs-in-cards */
+  --r-sm: 12px;     /* inputs, small inner items */
+  --r-md: 16px;     /* nested content inside a card */
+  --r-lg: 24px;     /* outer cards, modals, session cards */
+  --r-xl: 28px;     /* hero containers */
+  --r-pill: 999px;  /* buttons */
+
+  /* Soft shadows */
+  --shadow-xs: 0 1px 2px rgba(42,36,29,0.04);
+  --shadow-sm: 0 2px 8px rgba(42,36,29,0.05), 0 1px 2px rgba(42,36,29,0.04);
+  --shadow-md: 0 6px 20px rgba(42,36,29,0.07), 0 2px 4px rgba(42,36,29,0.04);
+  --shadow-lg: 0 18px 48px rgba(42,36,29,0.12), 0 4px 10px rgba(42,36,29,0.06);
+
+  --font-serif: 'Fraunces', 'EB Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* Serif swap via tweak */
+[data-serif="Fraunces"]          { --font-serif: 'Fraunces', Georgia, serif; }
+[data-serif="Playfair Display"]  { --font-serif: 'Playfair Display', Georgia, serif; }
+[data-serif="DM Serif Display"]  { --font-serif: 'DM Serif Display', Georgia, serif; }
+[data-serif="EB Garamond"]       { --font-serif: 'EB Garamond', Georgia, serif; }
+
+/* Density */
+[data-density="compact"] {
+  --pad-main: 32px 40px 56px;
+}
+[data-density="comfortable"] {
+  --pad-main: 48px 56px 80px;
+}
+
+/* Variants — modern: tighter, no italic serif */
+[data-variant="modern"] {
+  --paper: #FBFAF7;
+  --paper-soft: #F1EFEA;
+}
+[data-variant="modern"] .font-serif { font-style: normal !important; letter-spacing: -0.02em; }
+
+[data-variant="editorial"] {
+  --paper: #F0EADD;
+  --paper-soft: #E5DDC9;
+  --rule: #C9C1AD;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.55;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+input, select, textarea { font-family: inherit; color: var(--ink); }
+input:focus, select:focus, textarea:focus { outline: 2px solid color-mix(in srgb, var(--ink) 18%, transparent); outline-offset: 2px; border-color: var(--ink-soft); }
+a { color: inherit; }
+
+.font-serif { font-family: var(--font-serif); }
+.font-mono  { font-family: var(--font-mono); }
+.nowrap { white-space: nowrap; }
+
+.responsive-title { font-size: clamp(32px, 5vw, 44px); }
+
+/* Shell layout — sidebar stays visible on desktop, collapses on narrow */
+.responsive-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 53px);
+}
+.responsive-sidebar {
+  border-right: 0.5px solid var(--rule);
+  background: var(--paper);
+  padding: 32px 20px 24px;
+  position: sticky; top: 53px; height: calc(100vh - 53px);
+  display: flex; flex-direction: column;
+}
+.hover-sidebar-inner {
+  display: flex; flex-direction: column; flex: 1; min-height: 0;
+}
+.responsive-sidebar-brand { }
+.hover-sidebar-brand-mini { display: none; }
+.hover-sidebar-nav {
+  margin-top: 36px; flex: 1;
+}
+.hover-sidebar-footer {
+  display: flex; flex-direction: column; gap: 12px; align-items: stretch;
+}
+.hover-sidebar-footer-info { min-width: 0; }
+.hover-sidebar-signout {
+  background: transparent; cursor: pointer; width: 100%;
+  justify-content: flex-start;
+}
+.hover-sidebar-signout:hover { background: var(--paper-soft) !important; }
+
+/* Main */
+.responsive-main {
+  padding: 48px 56px 80px;
+}
+
+@media (max-width: 900px) {
+  .responsive-shell { grid-template-columns: 72px 1fr; }
+  .responsive-sidebar { padding: 20px 12px; }
+  .hover-sidebar-brand-full { display: none; }
+  .hover-sidebar-brand-mini {
+    display: flex; width: 40px; height: 40px;
+    align-items: center; justify-content: center;
+    font-size: 24px; font-style: italic; color: var(--ink);
+    border: 0.5px solid var(--rule);
+  }
+  .responsive-sidebar-rule { display: none; }
+  .hover-sidebar-navlabel { display: none; }
+  .hover-sidebar-footer-info { display: none; }
+  .hover-sidebar-footer { justify-content: center; }
+  .responsive-main { padding: 32px 24px 56px; }
+}
+
+@media (max-width: 600px) {
+  .login-wrap { grid-template-columns: 1fr !important; }
+  .login-left { padding: 36px 28px !important; }
+  .login-right { padding: 36px 28px !important; }
+  .grid-2col { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .responsive-main { padding: 24px 16px 48px; }
+  .hs-topnav { padding: 0 20px !important; }
+  .hs-mainwrap { padding: 32px 20px 56px !important; }
+}
+
+@media (max-width: 800px) {
+  .hs-topnav { padding: 0 24px !important; }
+  .hs-mainwrap { padding: 36px 24px 56px !important; }
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translate(-50%, 6px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: var(--r-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Select / input look */
+select, input[type="date"], input[type="time"], input[type="email"], input[type="text"], input[type="password"], input[type="number"], textarea {
+  background: var(--paper);
+  border-radius: var(--r-sm);
+}
